@@ -1,0 +1,134 @@
+# CI/CD (deployment-specification §5)
+#  - Pull requests: catalog validation, tests, type check, build, container smoke test. No secrets, no push.
+#  - Push to main: the same checks, then ONE image is built, smoke-tested and pushed to GHCR as
+#      ghcr.io/<owner>/ufc-student-platform:sha-<commit>   (immutable, for rollback)
+#      ghcr.io/<owner>/ufc-student-platform:main           (what Coolify deploys)
+#    then, only when the repository variable COOLIFY_DEPLOY_ENABLED is "true", Coolify is asked to
+#    redeploy and the job waits until the public site serves this exact commit.
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# One release at a time on main (the deployment lock); superseded PR runs are cancelled.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+env:
+  NODE_VERSION: '24'
+
+jobs:
+  check:
+    name: Validate, test, build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - name: Validate catalog
+        run: npm run validate
+      - name: Unit tests
+        run: npm test
+      - name: Type check
+        run: npm run check
+      - name: Build
+        run: npx astro build
+      - name: No private data in the built site
+        run: |
+          if grep -rlE 'source_filename|sha256|rights_basis|[A-Z]:[\\][A-Za-z]' dist/; then
+            echo "::error::private catalog fields or local paths found in dist/"; exit 1
+          fi
+
+  image:
+    name: Container image
+    needs: check
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    outputs:
+      image: ${{ steps.meta.outputs.image }}
+      digest: ${{ steps.push.outputs.digest }}
+    steps:
+      - uses: actions/checkout@v7
+      - id: meta
+        name: Image name
+        run: echo "image=ghcr.io/${GITHUB_REPOSITORY,,}" >> "$GITHUB_OUTPUT"
+      - name: Build
+        run: docker build --build-arg RELEASE_SHA=${{ github.sha }} -t local/site:${{ github.sha }} .
+      - name: Smoke test the container
+        run: |
+          docker run -d --name site -p 8080:8080 local/site:${{ github.sha }}
+          for i in $(seq 1 30); do curl -fs http://127.0.0.1:8080/health/ready >/dev/null && break; sleep 1; done
+          sh scripts/ci/smoke.sh http://127.0.0.1:8080 ${{ github.sha }}
+      - name: Container logs
+        if: failure()
+        run: docker logs site || true
+      - name: Log in to GHCR
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - id: push
+        name: Push sha-<commit> and main tags
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          IMAGE=${{ steps.meta.outputs.image }}
+          docker tag local/site:${{ github.sha }} "$IMAGE:sha-${{ github.sha }}"
+          docker tag local/site:${{ github.sha }} "$IMAGE:main"
+          docker push "$IMAGE:sha-${{ github.sha }}"
+          docker push "$IMAGE:main"
+          DIGEST=$(docker inspect --format '{{index .RepoDigests 0}}' "$IMAGE:sha-${{ github.sha }}")
+          echo "digest=$DIGEST" >> "$GITHUB_OUTPUT"
+          echo "Pushed \`$IMAGE:sha-${{ github.sha }}\` → \`$DIGEST\`" >> "$GITHUB_STEP_SUMMARY"
+
+  deploy:
+    name: Deploy to Coolify
+    needs: image
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && vars.COOLIFY_DEPLOY_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: ${{ vars.SITE_URL }}
+    steps:
+      - uses: actions/checkout@v7
+      - name: Trigger Coolify redeploy (pulls the :main image)
+        env:
+          COOLIFY_DEPLOY_WEBHOOK: ${{ secrets.COOLIFY_DEPLOY_WEBHOOK }}
+          COOLIFY_TOKEN: ${{ secrets.COOLIFY_TOKEN }}
+        run: |
+          curl --fail-with-body -sS --request GET "$COOLIFY_DEPLOY_WEBHOOK" \
+            --header "Authorization: Bearer $COOLIFY_TOKEN"
+      - name: Wait until the site serves this commit
+        env:
+          SITE_URL: ${{ vars.SITE_URL }}
+        run: |
+          for i in $(seq 1 60); do
+            commit=$(curl -fsS "${SITE_URL%/}/release.json" 2>/dev/null | sed -n 's/.*"commit":"\([^"]*\)".*/\1/p' || true)
+            [ "$commit" = "${{ github.sha }}" ] && echo "Serving ${{ github.sha }}" && exit 0
+            echo "Waiting ($i/60): serving '${commit:-unreachable}'"; sleep 10
+          done
+          echo "::error::the site did not serve ${{ github.sha }} within 10 minutes"; exit 1
+      - name: Smoke test production
+        run: sh scripts/ci/smoke.sh "${{ vars.SITE_URL }}" ${{ github.sha }}
+      - name: Record release
+        run: |
+          {
+            echo "### Deployed"
+            echo "- Commit: \`${{ github.sha }}\`"
+            echo "- Image: \`${{ needs.image.outputs.digest }}\`"
+            echo "- Site: ${{ vars.SITE_URL }}"
+            echo "- Rollback: in Coolify set the image tag to \`sha-<previous commit>\` and redeploy."
+          } >> "$GITHUB_STEP_SUMMARY"
