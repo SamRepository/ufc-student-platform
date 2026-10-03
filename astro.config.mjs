@@ -8,4 +8,10 @@ export default defineConfig({
   redirects: {
     '/': '/ar/',
   },
+  vite: {
+    build: {
+      // Emit every script as a file so the Content-Security-Policy can forbid inline scripts.
+      assetsInlineLimit: 0,
+    },
+  },
 });
