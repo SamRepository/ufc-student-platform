@@ -1,0 +1,32 @@
+id: lean-startup
+id_prefix: ls
+language: ar
+title:
+  original: "المؤسسات الناشئة المرنة (Lean Startup)"
+  ar: "المؤسسات الناشئة المرنة (Lean Startup)"
+  fr: "Lean Startup (startups agiles)"
+  en: "Lean Startup"
+cover: lean-startup.png
+moodle:
+  course_id: 22
+  url: https://mast-cmpt.ufc.dz/s1/course/view.php?id=22
+  last_checked: 2026-09-26
+aids: []
+overview:
+  checked: 2026-09-26
+  text:
+    ar: >-
+      يقدّم المقياس منهجية الشركات الناشئة الرشيقة والتعلّم المُثبت بالتجربة: تحويل فكرة مبتكرة أو نتيجة بحث إلى مشروع
+      قابل للاختبار، وصياغة فرضيات العمل واختبارها مع زبائن حقيقيين، وبناء المنتج الأولي (MVP)، وتصميم نموذج العمل
+      وتمييزه عن مخطط الأعمال، ثم قراءة مؤشرات السوق لاتخاذ قرار الاستمرار أو التحول، وقياس الأداء وإدارة الفشل والنمو والتمويل.
+      يتكون المحتوى من 12 وحدة تعليمية.
+    fr: >-
+      Le module présente la méthode Lean Startup et l’apprentissage validé : transformer une idée ou un résultat de recherche
+      en projet testable, formuler et tester des hypothèses avec de vrais clients, construire un produit minimum viable (MVP),
+      concevoir un modèle d’affaires distinct du business plan, interpréter les signaux du marché pour persévérer ou pivoter,
+      et comprendre la mesure, la gestion de l’échec, la croissance et le financement. Le contenu compte 12 unités.
+    en: >-
+      The module introduces Lean Startup and validated learning: turning an innovative idea or research result into a
+      testable project, formulating and testing business hypotheses with real customers, building a minimum viable product
+      (MVP), designing a business model as distinct from a business plan, reading market evidence to persevere or pivot, and
+      understanding metrics, failure management, growth and financing. The content has 12 teaching units.

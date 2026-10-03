@@ -1,0 +1,6 @@
+# Keep LF line endings in the repository (the site builds in Linux containers).
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary

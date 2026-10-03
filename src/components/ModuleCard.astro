@@ -1,0 +1,34 @@
+---
+import { Image } from 'astro:assets';
+import LocalText from './LocalText.astro';
+import { coverImage } from '../lib/covers';
+import { href, t, type Locale } from '../lib/i18n';
+import type { PublicModule } from '../lib/catalog';
+
+interface Props {
+  module: PublicModule;
+  locale: Locale;
+}
+const { module: m, locale } = Astro.props;
+const s = t(locale);
+const cover = coverImage(m.cover);
+const count = m.resources.length;
+---
+
+<li class="card">
+  <a class="card-link" href={href(locale, `modules/${m.id}`)}>
+    <div class="cover">
+      {
+        cover ? (
+          <Image src={cover} alt="" widths={[320, 480]} sizes="(max-width: 40rem) 100vw, 20rem" loading="lazy" />
+        ) : (
+          <span class="placeholder" aria-hidden="true">📘</span>
+        )
+      }
+    </div>
+    <div class="body">
+      <h3><LocalText text={m.title} locale={locale} originalLang={m.language} showFallback={false} /></h3>
+      <p class="meta">{s.resourcesCount(count)}</p>
+    </div>
+  </a>
+</li>

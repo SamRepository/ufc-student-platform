@@ -1,0 +1,181 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getPublicCatalog, pickTitle } from '../../lib/catalog';
+import { LOCALES, t, type Locale } from '../../lib/i18n';
+import { CONTENT_LANGUAGES, ORIGINS, RESOURCE_TYPES } from '../../lib/schema';
+
+export function getStaticPaths() {
+  return LOCALES.map((locale) => ({ params: { locale } }));
+}
+
+const locale = Astro.params.locale as Locale;
+const s = t(locale);
+const { modules } = getPublicCatalog();
+const present = <T extends string>(all: readonly T[], key: 'type' | 'origin' | 'language') =>
+  all.filter((v) => modules.some((m) => m.resources.some((r) => r[key] === v)));
+
+// Strings the browser script needs to render results.
+const config = {
+  locale,
+  strings: {
+    results: Array.from({ length: 11 }, (_, n) => s.search.results(n)),
+    resultsMany: s.search.results(99).replace('99', '{n}'),
+    noResults: s.search.noResults,
+    loadError: s.search.loadError,
+    originalLanguage: s.originalLanguage,
+    draft: s.draft,
+    type: s.type,
+    origin: s.origin,
+  },
+  modules: Object.fromEntries(modules.map((m) => [m.id, pickTitle(m.title, locale, m.language).value])),
+};
+---
+
+<Base locale={locale} title={s.search.title} path="search" nav="search">
+  <h1>{s.search.title}</h1>
+  <p class="meta">{s.search.scopeNote}</p>
+
+  <form class="search-form" role="search" method="get" id="search-form">
+    <div class="row">
+      <label class="visually-hidden" for="q">{s.search.label}</label>
+      <input type="search" id="q" name="q" placeholder={s.search.placeholder} autocomplete="off" />
+      <button type="submit">{s.search.submit}</button>
+    </div>
+    <div class="filters">
+      <label>
+        {s.search.module}
+        <select name="module">
+          <option value="">{s.search.any}</option>
+          {modules.map((m) => <option value={m.id}>{pickTitle(m.title, locale, m.language).value}</option>)}
+        </select>
+      </label>
+      <label>
+        {s.search.type}
+        <select name="type">
+          <option value="">{s.search.any}</option>
+          {present(RESOURCE_TYPES, 'type').map((v) => <option value={v}>{s.type[v]}</option>)}
+        </select>
+      </label>
+      <label>
+        {s.search.language}
+        <select name="language">
+          <option value="">{s.search.any}</option>
+          {present(CONTENT_LANGUAGES, 'language').map((v) => <option value={v}>{s.contentLanguage[v]}</option>)}
+        </select>
+      </label>
+      <label>
+        {s.search.origin}
+        <select name="origin">
+          <option value="">{s.search.any}</option>
+          {present(ORIGINS, 'origin').map((v) => <option value={v}>{s.origin[v]}</option>)}
+        </select>
+      </label>
+    </div>
+    <p><button type="button" id="clear">{s.search.clear}</button></p>
+  </form>
+
+  <noscript><p class="notice">{s.search.needsJs}</p></noscript>
+  <p id="status" class="meta" role="status" aria-live="polite"></p>
+  <ul id="results" class="resource-list"></ul>
+
+  <script type="application/json" id="search-config" set:html={JSON.stringify(config)} />
+</Base>
+
+<script>
+  import { bidiText } from '../../lib/bidi';
+  import { search, type IndexEntry, type SearchIndex } from '../../lib/search';
+
+  type Config = {
+    locale: 'ar' | 'fr' | 'en';
+    strings: {
+      results: string[];
+      resultsMany: string;
+      noResults: string;
+      loadError: string;
+      originalLanguage: string;
+      draft: string;
+      type: Record<string, string>;
+      origin: Record<string, string>;
+    };
+    modules: Record<string, string>;
+  };
+
+  const config: Config = JSON.parse(document.getElementById('search-config')!.textContent!);
+  const form = document.getElementById('search-form') as HTMLFormElement;
+  const status = document.getElementById('status')!;
+  const list = document.getElementById('results')!;
+  const FILTERS = ['module', 'type', 'language', 'origin'] as const;
+  let index: SearchIndex | undefined;
+
+  const el = (tag: string, props: Record<string, string> = {}, text?: string) => {
+    const node = document.createElement(tag);
+    for (const [k, v] of Object.entries(props)) node.setAttribute(k, v);
+    if (text !== undefined) node.textContent = text;
+    return node;
+  };
+
+  function renderEntry(e: IndexEntry) {
+    const li = el('li', { class: 'resource' + (e.draft ? ' is-draft' : '') });
+    const div = el('div', { class: 'title' });
+    const a = el('a', { href: `/${config.locale}/resources/${e.id}/` });
+    const translated = e.title[config.locale];
+    a.append(el('bdi', { dir: 'auto', ...(translated || e.language === 'mixed' ? {} : { lang: e.language }) }, bidiText(translated ?? e.title.original)));
+    div.append(a);
+    if (!translated && e.language !== config.locale) div.append(' ', el('span', { class: 'fallback' }, `(${config.strings.originalLanguage})`));
+    const badges = el('div', { class: 'badges' });
+    badges.append(
+      el('span', { class: `badge ${e.origin}` }, config.strings.origin[e.origin]),
+      el('span', { class: 'badge' }, config.strings.type[e.type]),
+      el('span', { class: 'badge' }, config.modules[e.module] ?? e.module),
+    );
+    if (e.draft) badges.append(el('span', { class: 'badge draft' }, config.strings.draft));
+    div.append(badges);
+    li.append(div);
+    return li;
+  }
+
+  function run(updateUrl: boolean) {
+    if (!index) return;
+    const data = new FormData(form);
+    const q = String(data.get('q') ?? '').trim();
+    const filters = Object.fromEntries(FILTERS.map((f) => [f, String(data.get(f) ?? '')]).filter(([, v]) => v));
+    if (updateUrl) {
+      const params = new URLSearchParams({ ...(q ? { q } : {}), ...filters });
+      history.replaceState(null, '', params.size ? `?${params}` : location.pathname);
+    }
+    if (!q && Object.keys(filters).length === 0) {
+      list.replaceChildren();
+      status.textContent = '';
+      return;
+    }
+    const results = search(index, q, filters);
+    list.replaceChildren(...results.map(renderEntry));
+    const n = results.length;
+    status.textContent = n === 0 ? config.strings.noResults : n <= 10 ? config.strings.results[n]! : config.strings.resultsMany.replace('{n}', String(n));
+  }
+
+  // Restore state from the URL so results can be shared and survive reloads.
+  const params = new URLSearchParams(location.search);
+  (form.elements.namedItem('q') as HTMLInputElement).value = params.get('q') ?? '';
+  for (const f of FILTERS) (form.elements.namedItem(f) as HTMLSelectElement).value = params.get(f) ?? '';
+
+  form.addEventListener('submit', (ev) => {
+    ev.preventDefault();
+    run(true);
+  });
+  form.addEventListener('input', () => run(true));
+  document.getElementById('clear')!.addEventListener('click', () => {
+    for (const f of FILTERS) (form.elements.namedItem(f) as HTMLSelectElement).value = '';
+    run(true);
+  });
+
+  fetch('/search-index.json')
+    .then((r) => r.json())
+    .then((data: SearchIndex) => {
+      index = data;
+      run(false);
+    })
+    .catch(() => {
+      status.textContent = config.strings.loadError;
+    });
+</script>

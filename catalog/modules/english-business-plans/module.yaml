@@ -1,0 +1,35 @@
+id: english-business-plans
+id_prefix: eng
+language: en
+title:
+  original: "English كتابة و عرض خطط الأعمال باللغة الإنجليزية"
+  ar: "كتابة وعرض خطط الأعمال باللغة الإنجليزية"
+  fr: "Rédiger et présenter un business plan en anglais"
+  en: "Writing and presenting business plans in English"
+cover: english-business-plans.png
+moodle:
+  course_id: 12
+  url: https://mast-cmpt.ufc.dz/s1/course/view.php?id=12
+  last_checked: 2026-09-26
+aids: []
+facts:
+  instructor: "ARKOUB OUALI"
+  credits: 1
+  coefficient: 1
+  academic_year: "2026–2027"
+  verified: 2026-09-26
+overview:
+  checked: 2026-09-26
+  text:
+    ar: >-
+      يهدف المقياس إلى تحسين اللغة الإنجليزية من خلال تعلّم كتابة مخطط أعمال وعرضه. يتناول ثمانية محاور: الملخص التنفيذي،
+      ووصف المؤسسة، وتحليل السوق وخطة التسويق، وخطة الإدارة، والمتطلبات التشغيلية والمراجعة التقنية، وخطة الإنتاج،
+      والخطة المالية، وتحليل المخاطر.
+    fr: >-
+      Le module vise à améliorer l’anglais en apprenant à rédiger et présenter un business plan. Il couvre huit thèmes :
+      résumé exécutif, description de l’entreprise, analyse de marché et plan marketing, plan de management, exigences
+      opérationnelles et revue technique, plan de production, plan financier et analyse des risques.
+    en: >-
+      The module improves English while teaching how to write and present a business plan. It covers eight topics: the
+      executive summary, description of the business, market analysis and marketing plan, management plan, operational
+      requirements and technical review, production plan, financial plan, and risk analysis.

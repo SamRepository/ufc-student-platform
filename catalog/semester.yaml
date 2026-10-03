@@ -1,0 +1,17 @@
+# Semester definition. `modules` sets the display order (follows the Moodle portal course grid).
+id: m1-s1
+title:
+  ar: الماستر 1 محاسبة — السداسي الأول
+  fr: Master 1 comptabilité — semestre 1
+  en: Accounting Master 1 — Semester 1
+academic_year: 2026–2027
+portal_url: https://mast-cmpt.ufc.dz/s1/
+modules:
+  - lean-startup
+  - ifrs-1
+  - advanced-corporate-accounting-1
+  - advanced-financial-management
+  - international-auditing-standards
+  - comparative-accounting-systems
+  - deep-learning-applications
+  - english-business-plans

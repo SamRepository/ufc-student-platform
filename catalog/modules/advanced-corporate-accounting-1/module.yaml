@@ -1,0 +1,20 @@
+id: advanced-corporate-accounting-1
+id_prefix: aca
+language: ar
+title:
+  original: "محاسبة الشركات المعمقة 1"
+  ar: "محاسبة الشركات المعمقة 1"
+  fr: "Comptabilité approfondie des sociétés 1"
+  en: "Advanced corporate accounting 1"
+cover: advanced-corporate-accounting-1.jpeg
+moodle:
+  course_id: 20
+  url: https://mast-cmpt.ufc.dz/s1/course/view.php?id=20
+  last_checked: 2026-09-26
+aids: []
+facts:
+  instructor: "مراد أيت محمد"
+  credits: 5
+  coefficient: 2
+  academic_year: "2026–2027"
+  verified: 2026-09-26

@@ -1,0 +1,20 @@
+id: international-auditing-standards
+id_prefix: isa
+language: ar
+title:
+  original: "المعايير الدولية للتدقيق"
+  ar: "المعايير الدولية للتدقيق"
+  fr: "Normes internationales d'audit"
+  en: "International standards on auditing"
+cover: international-auditing-standards.jpg
+moodle:
+  course_id: 16
+  url: https://mast-cmpt.ufc.dz/s1/course/view.php?id=16
+  last_checked: 2026-09-26
+aids: []
+facts:
+  instructor: "عبد الرحمن بن عيسى"
+  credits: 4
+  coefficient: 2
+  academic_year: "2026–2027"
+  verified: 2026-09-26

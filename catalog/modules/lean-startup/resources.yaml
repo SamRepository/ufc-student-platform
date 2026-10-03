@@ -1,0 +1,355 @@
+# Resources for this module. Draft entries come from scripts/draft_manifest.py.
+- id: ls-notes
+  type: notes
+  order: 0
+  origin: student_note
+  language: en
+  featured: true
+  title:
+    original: Moodle Notes
+    ar: ملاحظات Moodle
+    fr: Notes Moodle
+    en: Moodle notes
+  rights: approved_public
+  rights_basis: owner-confirmation-2026-09-26
+  status: published
+  reviewed: '2026-10-03'
+  current_revision: ls-notes-r1
+  revisions:
+  - id: ls-notes-r1
+    drive_file_id: 1uApvmFzntg2gx5zOtWdYOXqeBTTjVJ2E
+    sha256: d94b117f2ef5dd5a15317283e2200ca46188cadf8d84713d92495a3e20e1b07f
+    bytes: 2726830
+    pages: 2
+    source_filename: 00- 00 Moodle Notes.pdf
+    acquired: '2026-09-26'
+- id: ls-syllabus
+  type: syllabus
+  order: 0
+  origin: official
+  language: ar
+  featured: false
+  title:
+    original: محتوى المقياس البرنامج التفصيلي
+  rights: approved_public
+  rights_basis: owner-confirmation-2026-09-26
+  status: published
+  reviewed: '2026-10-03'
+  official_url: https://mast-cmpt.ufc.dz/s1/course/view.php?id=22
+  current_revision: ls-syllabus-r1
+  revisions:
+  - id: ls-syllabus-r1
+    drive_file_id: 1kgTysRxKBRRF-eV5mUawjwpjfHUB6B6F
+    sha256: 3628c02879a986e375124589bb2e9c325b1bcac061f3e67327de89167102ad94
+    bytes: 577780
+    pages: 6
+    source_filename: 00- محتوى المقياس البرنامج التفصيلي.pdf
+    acquired: '2026-09-25'
+- id: ls-unit-01
+  type: lecture
+  order: 1
+  origin: official
+  language: ar
+  featured: false
+  title:
+    original: Unit 01 - (University 4.0) الوحدة 01 - الجامعة الريادية والجامعة من الجيل الرابع
+  rights: approved_public
+  rights_basis: owner-confirmation-2026-09-26
+  status: published
+  reviewed: '2026-10-03'
+  official_url: https://mast-cmpt.ufc.dz/s1/course/view.php?id=22
+  current_revision: ls-unit-01-r1
+  revisions:
+  - id: ls-unit-01-r1
+    drive_file_id: 1ScxgB5YvTICFm1c4O1i_7x8BTSa8SfIB
+    sha256: 0728a4ee1160e71155bf937f4b89a63994cb6dc6e693722a799a506697e583c3
+    bytes: 859983
+    pages: 9
+    source_filename: Unit 01 - (University 4.0) الوحدة 01 - الجامعة الريادية والجامعة من الجيل الرابع.pdf
+    acquired: '2026-09-25'
+- id: ls-unit-02
+  type: lecture
+  order: 2
+  origin: official
+  language: ar
+  featured: false
+  title:
+    original: Unit 02 - الوحدة 02 - الجامعة الريادية في عصر الذكاء الاصطناعي والاقتصاد المعرفي
+  rights: approved_public
+  rights_basis: owner-confirmation-2026-09-26
+  status: published
+  reviewed: '2026-10-03'
+  official_url: https://mast-cmpt.ufc.dz/s1/course/view.php?id=22
+  current_revision: ls-unit-02-r1
+  revisions:
+  - id: ls-unit-02-r1
+    drive_file_id: 1iO6F21a3d4WrAV8XlfzBVp9jy3t0jt0s
+    sha256: ce21924d56f42740d57f3de87b6c6a72219585b229481ea73566bdd5052e08b2
+    bytes: 684371
+    pages: 10
+    source_filename: Unit 02 - الوحدة 02 - الجامعة الريادية في عصر الذكاء الاصطناعي والاقتصاد المعرفي.pdf
+    acquired: '2026-09-25'
+- id: ls-unit-03
+  type: lecture
+  order: 3
+  origin: official
+  language: ar
+  featured: false
+  title:
+    original: Unit 03 - الوحدة 03 - منظومة ريادة الأعمال والابتكار في الجزائر والجامعة
+  rights: approved_public
+  rights_basis: owner-confirmation-2026-09-26
+  status: published
+  reviewed: '2026-10-03'
+  official_url: https://mast-cmpt.ufc.dz/s1/course/view.php?id=22
+  current_revision: ls-unit-03-r1
+  revisions:
+  - id: ls-unit-03-r1
+    drive_file_id: 1DEsJNj0jQBYRmKMHG084xfLB6mBlZTwu
+    sha256: 344fb59473c013dab38606de2abf9ad2eae86ea4b0ecc3ae7122d5d0e5e4eee0
+    bytes: 1007142
+    pages: 21
+    source_filename: Unit 03 - الوحدة 03 - منظومة ريادة الأعمال والابتكار في الجزائر والجامعة.pdf
+    acquired: '2026-09-25'
+- id: ls-unit-04
+  type: lecture
+  order: 4
+  origin: official
+  language: ar
+  featured: false
+  title:
+    original: Unit 04 - الوحدة 04 - مدخل إلى الشركات الناشئة
+  rights: approved_public
+  rights_basis: owner-confirmation-2026-09-26
+  status: published
+  reviewed: '2026-10-03'
+  official_url: https://mast-cmpt.ufc.dz/s1/course/view.php?id=22
+  current_revision: ls-unit-04-r1
+  revisions:
+  - id: ls-unit-04-r1
+    drive_file_id: 1zQV0cksTQlEAFcqRG-cQzhqZ4f2LKXju
+    sha256: 72798a02f9c01449a2495a6c67f3681ce1b153c47bd4ed3ad310217fbb560e99
+    bytes: 607655
+    pages: 8
+    source_filename: Unit 04 - الوحدة 04 - مدخل إلى الشركات الناشئة.pdf
+    acquired: '2026-09-25'
+- id: ls-unit-05
+  type: lecture
+  order: 5
+  origin: official
+  language: ar
+  featured: false
+  title:
+    original: Unit 05 - (Lean Startup) الوحدة  05 - منهجية الشركات الناشئة الرشيقة
+  rights: approved_public
+  rights_basis: owner-confirmation-2026-09-26
+  status: published
+  reviewed: '2026-10-03'
+  official_url: https://mast-cmpt.ufc.dz/s1/course/view.php?id=22
+  current_revision: ls-unit-05-r1
+  revisions:
+  - id: ls-unit-05-r1
+    drive_file_id: 1iYEDtc7of_gYhWiJPdTnTlSWTJll5RPx
+    sha256: 1e9321f60a39a8a4bfd2e984bfa9a488df0d903abc2cd7a24d7a666ee80f50eb
+    bytes: 700842
+    pages: 9
+    source_filename: Unit 05 - (Lean Startup) الوحدة  05 - منهجية الشركات الناشئة الرشيقة.pdf
+    acquired: '2026-09-25'
+- id: ls-unit-06
+  type: lecture
+  order: 6
+  origin: official
+  language: ar
+  featured: false
+  title:
+    original: Unit 06 - Lean Start الوحدة 06 - فهم السوق وسلوك الزبون في منهجية
+  rights: approved_public
+  rights_basis: owner-confirmation-2026-09-26
+  status: published
+  reviewed: '2026-10-03'
+  official_url: https://mast-cmpt.ufc.dz/s1/course/view.php?id=22
+  current_revision: ls-unit-06-r1
+  revisions:
+  - id: ls-unit-06-r1
+    drive_file_id: 191vtGMRImmpPc8vG9KmA2mSrcMaL8Fqr
+    sha256: 3b94f3b4eb88d5a7641738a43ba2ca7bdb6246baaaaf637d2ed51ba2c8044e75
+    bytes: 1098948
+    pages: 12
+    source_filename: Unit 06 - Lean Start الوحدة 06 - فهم السوق وسلوك الزبون في منهجية.pdf
+    acquired: '2026-09-25'
+- id: ls-unit-07
+  type: lecture
+  order: 7
+  origin: official
+  language: ar
+  featured: false
+  title:
+    original: Unit 07 - (Business Model) الوحدة 07 - نموذج العمل
+  rights: approved_public
+  rights_basis: owner-confirmation-2026-09-26
+  status: published
+  reviewed: '2026-10-03'
+  official_url: https://mast-cmpt.ufc.dz/s1/course/view.php?id=22
+  current_revision: ls-unit-07-r1
+  revisions:
+  - id: ls-unit-07-r1
+    drive_file_id: 1WrLEpSJgrcLWsbMWnGMtc4ShF1roIgHv
+    sha256: 88bbac580833a1bc65f6df406cabd295018c512e200e9175c14b3fff36f861ba
+    bytes: 679794
+    pages: 9
+    source_filename: Unit 07 - (Business Model) الوحدة 07 - نموذج العمل.pdf
+    acquired: '2026-09-25'
+- id: ls-unit-08
+  type: lecture
+  order: 8
+  origin: official
+  language: ar
+  featured: false
+  title:
+    original: Unit 08 - (MVP) الوحدة 08 - المنتج الأولي
+  rights: approved_public
+  rights_basis: owner-confirmation-2026-09-26
+  status: published
+  reviewed: '2026-10-03'
+  official_url: https://mast-cmpt.ufc.dz/s1/course/view.php?id=22
+  current_revision: ls-unit-08-r1
+  revisions:
+  - id: ls-unit-08-r1
+    drive_file_id: 19KmJ4CrBVwrR8v0wbUt7srvuHIHsTc6u
+    sha256: c7d762185e494e49cafe23ca247f67b885c5e6239ba0fcafdb59e26634d0fff8
+    bytes: 752959
+    pages: 8
+    source_filename: Unit 08 - (MVP) الوحدة 08 - المنتج الأولي.pdf
+    acquired: '2026-09-25'
+- id: ls-unit-09
+  type: lecture
+  order: 9
+  origin: official
+  language: ar
+  featured: false
+  title:
+    original: Unit 09 - TRIZ  الوحدة 09 - الذكاء الاصطناعي وطريقة في الابتكار
+  rights: approved_public
+  rights_basis: owner-confirmation-2026-09-26
+  status: published
+  reviewed: '2026-10-03'
+  official_url: https://mast-cmpt.ufc.dz/s1/course/view.php?id=22
+  current_revision: ls-unit-09-r1
+  revisions:
+  - id: ls-unit-09-r1
+    drive_file_id: 1EItdC-L1s2p6yR2kqRWUAli8MlbArtpt
+    sha256: 1c2ec5e7861b06703e3f68f807859f7d3eb0377805441f002e1d571e0ed2ebed
+    bytes: 1336978
+    pages: 22
+    source_filename: Unit 09 - TRIZ  الوحدة 09 - الذكاء الاصطناعي وطريقة في الابتكار.pdf
+    acquired: '2026-09-25'
+- id: ls-unit-10
+  type: lecture
+  order: 10
+  origin: official
+  language: ar
+  featured: false
+  title:
+    original: Unit 10 - (Pivot) أو الاستمرار (Persevere) الوحدة 10 - التحول الاستراتيجي
+  rights: approved_public
+  rights_basis: owner-confirmation-2026-09-26
+  status: published
+  reviewed: '2026-10-03'
+  official_url: https://mast-cmpt.ufc.dz/s1/course/view.php?id=22
+  current_revision: ls-unit-10-r1
+  revisions:
+  - id: ls-unit-10-r1
+    drive_file_id: 1wO0VcJR4QHdMkwuO4y1KS-wi3nOxF4v0
+    sha256: 48b1c6245da6415e4d20f7785da3471d2ffecba74a20a2bd23dc05d6f4a7d39c
+    bytes: 705268
+    pages: 13
+    source_filename: Unit 10 - (Pivot) أو الاستمرار (Persevere) الوحدة 10 - التحول الاستراتيجي.pdf
+    acquired: '2026-09-25'
+- id: ls-unit-11
+  type: lecture
+  order: 11
+  origin: official
+  language: ar
+  featured: false
+  title:
+    original: Unit 11 - (Measurement, Analytics and Failure Management) الوحدة 11 - القياس والتحليل وإدارة الفشل
+  rights: approved_public
+  rights_basis: owner-confirmation-2026-09-26
+  status: published
+  reviewed: '2026-10-03'
+  official_url: https://mast-cmpt.ufc.dz/s1/course/view.php?id=22
+  current_revision: ls-unit-11-r1
+  revisions:
+  - id: ls-unit-11-r1
+    drive_file_id: 1V7Nc6-bDef9BlUHPvveaFryG9SDUcId_
+    sha256: 4922eac30e98075f30fc377841ef6c3394569aba52e9ee0757c7eb817b27e09f
+    bytes: 683061
+    pages: 8
+    source_filename: Unit 11 - (Measurement, Analytics and Failure Management) الوحدة 11 - القياس والتحليل وإدارة الفشل.pdf
+    acquired: '2026-09-25'
+- id: ls-unit-12
+  type: lecture
+  order: 12
+  origin: official
+  language: ar
+  featured: false
+  title:
+    original: Unit 12 - الوحدة 12 - النمو والتمويل واتخاذ القرار الاستراتيجي
+  rights: approved_public
+  rights_basis: owner-confirmation-2026-09-26
+  status: published
+  reviewed: '2026-10-03'
+  official_url: https://mast-cmpt.ufc.dz/s1/course/view.php?id=22
+  current_revision: ls-unit-12-r1
+  revisions:
+  - id: ls-unit-12-r1
+    drive_file_id: 1PDSTTs2R9vunzamF-ORQwheY16BDNua4
+    sha256: 80c865a53fc8f060ed123167bfafc39c032d5091c39402130f84a7ab1693ae6c
+    bytes: 962513
+    pages: 11
+    source_filename: Unit 12 - الوحدة 12 - النمو والتمويل واتخاذ القرار الاستراتيجي.pdf
+    acquired: '2026-09-25'
+- id: ls-abbreviations
+  type: reference
+  order: 90
+  origin: official
+  language: ar
+  featured: false
+  title:
+    original: قائمة المختصرات
+  rights: approved_public
+  rights_basis: owner-confirmation-2026-09-26
+  status: published
+  reviewed: '2026-10-03'
+  official_url: https://mast-cmpt.ufc.dz/s1/course/view.php?id=22
+  current_revision: ls-abbreviations-r1
+  revisions:
+  - id: ls-abbreviations-r1
+    drive_file_id: 1uqK3tnM-USmxkkV66vASj9PEW6EBr36O
+    sha256: 22d570a06a299d84ab83a601f3287e456776a8382ce866a687bbdfb2c25f9c53
+    bytes: 651169
+    pages: 6
+    source_filename: قائمة المختصرات.pdf
+    acquired: '2026-09-25'
+- id: ls-references
+  type: reference
+  order: 91
+  origin: official
+  language: ar
+  featured: false
+  title:
+    original: قائمة أهم المراجع لمقياس الشركات الناشئة الرشيقة
+  rights: approved_public
+  rights_basis: owner-confirmation-2026-09-26
+  status: published
+  reviewed: '2026-10-03'
+  official_url: https://mast-cmpt.ufc.dz/s1/course/view.php?id=22
+  current_revision: ls-references-r1
+  revisions:
+  - id: ls-references-r1
+    drive_file_id: 1HZZfUFhYqoExx3Xsq6wdGA8649eDVsMy
+    sha256: 2cf3e892964886797b0aa70f9684eeae9103fecf159c397a7be649ac31c1c1b0
+    bytes: 586191
+    pages: 2
+    source_filename: قائمة أهم المراجع لمقياس الشركات الناشئة الرشيقة.pdf
+    acquired: '2026-09-25'

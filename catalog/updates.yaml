@@ -1,0 +1,12 @@
+# Reviewed change feed (F-05). Discovery date is never the official publication date.
+# Example entry:
+# - id: upd-2026-10-05-ls-unit-13
+#   module: lean-startup
+#   category: new            # new | revised | removed | corrected | assessment
+#   title: { ar: "...", en: "..." }
+#   source_url: https://mast-cmpt.ufc.dz/s1/course/view.php?id=22
+#   discovered: 2026-10-05
+#   reviewed: 2026-10-06
+#   resource_ids: [ls-unit-13]
+#   status: published
+[]

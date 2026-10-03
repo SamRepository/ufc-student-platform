@@ -1,0 +1,60 @@
+---
+import Base from '../../layouts/Base.astro';
+import LocalText from '../../components/LocalText.astro';
+import { getPublicCatalog, pickCurator } from '../../lib/catalog';
+import { LOCALES, formatDate, href, t, type Locale } from '../../lib/i18n';
+
+export function getStaticPaths() {
+  return LOCALES.map((locale) => ({ params: { locale } }));
+}
+
+const locale = Astro.params.locale as Locale;
+const s = t(locale);
+const { modules, updates } = getPublicCatalog();
+const moduleById = new Map(modules.map((m) => [m.id, m]));
+---
+
+<Base locale={locale} title={s.updates.title} path="updates" nav="updates">
+  <h1>{s.updates.title}</h1>
+  <p class="meta">{s.updates.intro}</p>
+
+  {
+    updates.length === 0 ? (
+      <p class="empty">{s.noUpdates}</p>
+    ) : (
+      <ul class="updates-list">
+        {updates.map((u) => {
+          const mod = moduleById.get(u.module);
+          const summary = u.summary && pickCurator(u.summary, locale);
+          const title = pickCurator(u.title, locale);
+          return (
+            <li class="panel">
+              <span class="badge">{s.updates.category[u.category]}</span>{' '}
+              <strong lang={title?.lang}>{title?.value}</strong>
+              {u.status !== 'published' && <span class="badge draft">{s.draft}</span>}
+              {summary && <p lang={summary.lang}>{summary.value}</p>}
+              <div class="meta">
+                {mod && (
+                  <a href={href(locale, `modules/${mod.id}`)}>
+                    <LocalText text={mod.title} locale={locale} originalLang={mod.language} showFallback={false} />
+                  </a>
+                )}
+                {' · '}
+                {u.published_on_moodle && <>{s.publishedOnMoodle(formatDate(u.published_on_moodle, locale))} · </>}
+                {s.updates.discovered(formatDate(u.discovered, locale))}
+                {u.source_url && (
+                  <>
+                    {' · '}
+                    <a href={u.source_url} rel="noopener">
+                      {s.officialSource}
+                    </a>
+                  </>
+                )}
+              </div>
+            </li>
+          );
+        })}
+      </ul>
+    )
+  }
+</Base>

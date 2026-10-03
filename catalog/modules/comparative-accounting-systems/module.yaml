@@ -1,0 +1,19 @@
+id: comparative-accounting-systems
+id_prefix: cas
+language: ar
+title:
+  original: "النظم المحاسبية المقارنة"
+  ar: "النظم المحاسبية المقارنة"
+  fr: "Systèmes comptables comparés"
+  en: "Comparative accounting systems"
+cover: comparative-accounting-systems.jpg
+moodle:
+  course_id: 15
+  url: https://mast-cmpt.ufc.dz/s1/course/view.php?id=15
+  last_checked: 2026-09-26
+aids: []
+facts:
+  instructor: "ياسين لعكيكزة"
+  credits: 5
+  coefficient: 2
+  verified: 2026-09-26

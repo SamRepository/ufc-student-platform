@@ -1,0 +1,223 @@
+# Resources for this module. Draft entries come from scripts/draft_manifest.py.
+- id: eng-notes
+  type: notes
+  order: 0
+  origin: student_note
+  language: en
+  featured: true
+  title:
+    original: Moodle Notes
+    ar: ملاحظات Moodle
+    fr: Notes Moodle
+    en: Moodle notes
+  rights: approved_public
+  rights_basis: owner-confirmation-2026-09-26
+  status: published
+  reviewed: '2026-10-03'
+  current_revision: eng-notes-r1
+  revisions:
+  - id: eng-notes-r1
+    drive_file_id: 1820IvPogtfdXzN0kJn0QeyIfzBXHKCNc
+    sha256: 2e6776a644dfdd82317ed9e874c940687e08349919cb4eb5f0f438a7976176f6
+    bytes: 9502605
+    pages: 2
+    source_filename: 00- 00 Moodle Notes.pdf
+    acquired: '2026-09-26'
+- id: eng-lesson-00
+  type: lecture
+  order: 0
+  origin: official
+  language: en
+  featured: false
+  title:
+    original: Introduction
+  rights: approved_public
+  rights_basis: owner-confirmation-2026-09-26
+  status: published
+  reviewed: '2026-10-03'
+  official_url: https://mast-cmpt.ufc.dz/s1/course/view.php?id=12
+  current_revision: eng-lesson-00-r1
+  revisions:
+  - id: eng-lesson-00-r1
+    drive_file_id: 17IjNWoqN72UPydKYc2FWN-AGjFfB5TRd
+    sha256: 779fee8bc663d29aa2e3f974aa07e0cbbe11e6f713c2ea5a03012029d0d25b6e
+    bytes: 196604
+    pages: 2
+    source_filename: 00- Introduction.pdf
+    acquired: '2026-09-25'
+- id: eng-lesson-01
+  type: lecture
+  order: 1
+  origin: official
+  language: en
+  featured: false
+  title:
+    original: The Executive Summary
+  rights: approved_public
+  rights_basis: owner-confirmation-2026-09-26
+  status: published
+  reviewed: '2026-10-03'
+  official_url: https://mast-cmpt.ufc.dz/s1/course/view.php?id=12
+  current_revision: eng-lesson-01-r1
+  revisions:
+  - id: eng-lesson-01-r1
+    drive_file_id: 1c5dlZKfupVGP40bPFlEsxHXUxQdF9Hrq
+    sha256: ab0a65338f45ed3cb798598f5688093f32953fc2f6fb420a895a984550f157a5
+    bytes: 343522
+    pages: 2
+    source_filename: 01- The Executive Summary.pdf
+    acquired: '2026-09-25'
+- id: eng-lesson-02
+  type: lecture
+  order: 2
+  origin: official
+  language: en
+  featured: false
+  title:
+    original: The Description of Business
+  rights: approved_public
+  rights_basis: owner-confirmation-2026-09-26
+  status: published
+  reviewed: '2026-10-03'
+  official_url: https://mast-cmpt.ufc.dz/s1/course/view.php?id=12
+  current_revision: eng-lesson-02-r1
+  revisions:
+  - id: eng-lesson-02-r1
+    drive_file_id: 15NmxhrOu1ztK8odPuCzqxUzrpFT3XmRW
+    sha256: 3fc95ec15bb0490abf7d6333acb01f4f4fac9d64a51c9aec5a61ba5b612d126c
+    bytes: 350306
+    pages: 3
+    source_filename: 02- The Description of Business.pdf
+    acquired: '2026-09-25'
+- id: eng-lesson-03
+  type: lecture
+  order: 3
+  origin: official
+  language: en
+  featured: false
+  title:
+    original: Market Analysis and Marketing Plan
+  rights: approved_public
+  rights_basis: owner-confirmation-2026-09-26
+  status: published
+  reviewed: '2026-10-03'
+  official_url: https://mast-cmpt.ufc.dz/s1/course/view.php?id=12
+  current_revision: eng-lesson-03-r1
+  revisions:
+  - id: eng-lesson-03-r1
+    drive_file_id: 1ev1ziFJfo8JhKNqCw-VPvs6zDSFg3d3z
+    sha256: c8f449210716b2cce0d78259c0befb11a6fa5ae4a3a8dd7666511163a0bb2983
+    bytes: 310535
+    pages: 6
+    source_filename: 03-Market Analysis and Marketing Plan.pdf
+    acquired: '2026-09-25'
+- id: eng-lesson-04
+  type: lecture
+  order: 4
+  origin: official
+  language: en
+  featured: false
+  title:
+    original: Management Plan
+  rights: approved_public
+  rights_basis: owner-confirmation-2026-09-26
+  status: published
+  reviewed: '2026-10-03'
+  official_url: https://mast-cmpt.ufc.dz/s1/course/view.php?id=12
+  current_revision: eng-lesson-04-r1
+  revisions:
+  - id: eng-lesson-04-r1
+    drive_file_id: 1Mk38v4uXiVNyBoOhqi_1sUNDyPb4Q9YS
+    sha256: 970b3f114a641119f827b65191902a7657f0c4738b2b919bd018d52a04ba5e57
+    bytes: 280954
+    pages: 3
+    source_filename: 04-Management Plan.pdf
+    acquired: '2026-09-25'
+- id: eng-lesson-05
+  type: lecture
+  order: 5
+  origin: official
+  language: en
+  featured: false
+  title:
+    original: Operational Requirement and Technical Review
+  rights: approved_public
+  rights_basis: owner-confirmation-2026-09-26
+  status: published
+  reviewed: '2026-10-03'
+  official_url: https://mast-cmpt.ufc.dz/s1/course/view.php?id=12
+  current_revision: eng-lesson-05-r1
+  revisions:
+  - id: eng-lesson-05-r1
+    drive_file_id: 1Xk1dgs6frcliStWSnb60OjSL7gxbeGnF
+    sha256: 4226af8534d8d85206692fc61e61967aeac76f50a8a034a8d4adc7dc39fba03a
+    bytes: 283370
+    pages: 3
+    source_filename: 05-Operational Requirement and Technical Review.pdf
+    acquired: '2026-09-25'
+- id: eng-lesson-06
+  type: lecture
+  order: 6
+  origin: official
+  language: en
+  featured: false
+  title:
+    original: Production Plan
+  rights: approved_public
+  rights_basis: owner-confirmation-2026-09-26
+  status: published
+  reviewed: '2026-10-03'
+  official_url: https://mast-cmpt.ufc.dz/s1/course/view.php?id=12
+  current_revision: eng-lesson-06-r1
+  revisions:
+  - id: eng-lesson-06-r1
+    drive_file_id: 1Piig3hxPVFLidHCbO8EzGXiW-GtIaHsg
+    sha256: 9f09ef9654eaf6c30ddf2c57e0618fecbfcaf7739a728003c1a724ffda7c22ed
+    bytes: 393884
+    pages: 4
+    source_filename: 06- Production Plan.pdf
+    acquired: '2026-09-25'
+- id: eng-lesson-07
+  type: lecture
+  order: 7
+  origin: official
+  language: en
+  featured: false
+  title:
+    original: Financial Plan
+  rights: approved_public
+  rights_basis: owner-confirmation-2026-09-26
+  status: published
+  reviewed: '2026-10-03'
+  official_url: https://mast-cmpt.ufc.dz/s1/course/view.php?id=12
+  current_revision: eng-lesson-07-r1
+  revisions:
+  - id: eng-lesson-07-r1
+    drive_file_id: 1ws_Ll6RYdzgG0JFNix_GWxFx37IbLc7K
+    sha256: f0e4524ae3565facd20ee4feff974e5bfa2d5ec4359bde55ce780c0f0f744113
+    bytes: 282583
+    pages: 3
+    source_filename: 07- Financial Plan.pdf
+    acquired: '2026-09-25'
+- id: eng-lesson-08
+  type: lecture
+  order: 8
+  origin: official
+  language: en
+  featured: false
+  title:
+    original: Risks Analysis
+  rights: approved_public
+  rights_basis: owner-confirmation-2026-09-26
+  status: published
+  reviewed: '2026-10-03'
+  official_url: https://mast-cmpt.ufc.dz/s1/course/view.php?id=12
+  current_revision: eng-lesson-08-r1
+  revisions:
+  - id: eng-lesson-08-r1
+    drive_file_id: 1R23eRBm_4fIUsvz9VdYgB7gMlTGLt_N4
+    sha256: 7686070bead073d96905ef4047545d70ff91e8c864a850c117ef1e1afcc263b3
+    bytes: 283314
+    pages: 3
+    source_filename: 08- Risks Analysis.pdf
+    acquired: '2026-09-25'

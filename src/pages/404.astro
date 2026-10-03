@@ -1,0 +1,20 @@
+---
+import Base from '../layouts/Base.astro';
+import { LOCALES, LOCALE_NAMES, href, t } from '../lib/i18n';
+---
+
+<Base locale="ar" title={t('ar').notFound}>
+  <h1>{t('ar').notFound}</h1>
+  <ul>
+    {
+      LOCALES.map((l) => (
+        <li lang={l} dir={l === 'ar' ? 'rtl' : 'ltr'}>
+          <a href={href(l)}>
+            {t(l).nav.home} — {LOCALE_NAMES[l]}
+          </a>
+          {l !== 'ar' && <span> · {t(l).notFound}</span>}
+        </li>
+      ))
+    }
+  </ul>
+</Base>

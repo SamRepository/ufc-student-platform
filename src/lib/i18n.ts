@@ -1,0 +1,303 @@
+import { LOCALES, type Locale } from './schema';
+
+export { LOCALES, type Locale };
+export const DEFAULT_LOCALE: Locale = 'ar';
+export const TIMEZONE = 'Africa/Algiers';
+
+export const dir = (locale: string) => (locale === 'ar' ? 'rtl' : 'ltr');
+
+
+export const LOCALE_NAMES: Record<Locale, string> = { ar: 'العربية', fr: 'Français', en: 'English' };
+
+const INTL_LOCALE: Record<Locale, string> = { ar: 'ar-DZ', fr: 'fr-FR', en: 'en-GB' };
+
+/** Formats an ISO date (YYYY-MM-DD) without shifting it across timezones. */
+export function formatDate(iso: string, locale: Locale): string {
+  const [y, m, d] = iso.split('-').map(Number);
+  return new Intl.DateTimeFormat(INTL_LOCALE[locale], { dateStyle: 'medium', timeZone: 'UTC', numberingSystem: 'latn' }).format(
+    new Date(Date.UTC(y!, m! - 1, d!)),
+  );
+}
+
+export function formatBytes(bytes: number, locale: Locale): string {
+  const mb = bytes / 1_000_000;
+  const n = new Intl.NumberFormat(INTL_LOCALE[locale], { maximumFractionDigits: mb < 1 ? 2 : 1, numberingSystem: 'latn' });
+  return mb < 1 ? `${n.format(bytes / 1000)} kB` : `${n.format(mb)} MB`;
+}
+
+/** Site URL with the trailing slash the static build uses: href('ar', 'modules/x') → /ar/modules/x/ */
+export const href = (locale: Locale, path = '') => {
+  const p = path.replace(/^\/+|\/+$/g, '');
+  return p ? `/${locale}/${p}/` : `/${locale}/`;
+};
+
+const strings = {
+  ar: {
+    siteName: 'منصة طلبة الماستر — محاسبة',
+    siteTagline: 'الماستر 1، السداسي 1 — جامعة التكوين المتواصل',
+    skip: 'انتقل إلى المحتوى',
+    nav: { home: 'الرئيسية', search: 'بحث', updates: 'المستجدات', about: 'حول المنصة' },
+    languages: 'اللغة',
+    initiative:
+      'مبادرة طلابية مستقلة. Moodle يبقى المرجع الرسمي للدروس والتقييمات والمواعيد. استضافة المنصة لا تعني اعتمادها رسميًا من الجامعة.',
+    moodlePortal: 'منصة Moodle الرسمية',
+    modules: 'المقاييس',
+    resourcesCount: (n: number) => (n === 0 ? 'لا توجد موارد منشورة بعد' : n === 1 ? 'مورد واحد' : n === 2 ? 'موردان' : n <= 10 ? `${n} موارد` : `${n} موردًا`),
+    recentUpdates: 'آخر المستجدات',
+    noUpdates: 'لم تُنشر أي مستجدات على هذه المنصة بعد.',
+    allUpdates: 'كل المستجدات',
+    overview: 'نظرة عامة',
+    curatorNote: 'ملاحظة من المشرف على المنصة، وليست نصًا رسميًا للمقياس',
+    checkedOn: (d: string) => `رُوجعت في ${d}`,
+    facts: { instructor: 'الأستاذ', credits: 'الأرصدة', coefficient: 'المعامل', academicYear: 'السنة الجامعية' },
+    featuredNotes: 'ملاحظات المقياس',
+    courseMaterials: 'محتوى المقياس',
+    exercises: 'الأنشطة والتقييمات الرسمية',
+    references: 'مراجع وقوائم',
+    studyAids: 'وسائل مساعدة على المراجعة',
+    emptyResources: 'لم يُنشر أي محتوى لهذا المقياس على هذه المنصة بعد. هذا لا يعني أن Moodle لا يحتوي عليه.',
+    emptyExercises: 'لم تُنشر أنشطة أو تقييمات على هذه المنصة بعد. راجع Moodle للتعليمات الرسمية.',
+    emptyAids: 'لا توجد وسائل مراجعة منشورة لهذا المقياس بعد.',
+    openOnMoodle: 'فتح المقياس على Moodle',
+    openPdf: 'فتح ملف PDF',
+    pdfPending: 'رابط الملف غير متاح بعد',
+    officialSource: 'المصدر الرسمي',
+    moodleNeedsAccount: 'يتطلب Moodle الدخول بحسابك في الجامعة. هذه المنصة لا تمنح صلاحيات الوصول إليه.',
+    details: 'التفاصيل',
+    pages: (n: number) => `${n} صفحة`,
+    acquired: (d: string) => `أُضيف إلى المكتبة في ${d}`,
+    publishedOnMoodle: (d: string) => `نُشر على Moodle في ${d}`,
+    academicYearLabel: (y: string) => `السنة المذكورة في الملف: ${y}`,
+    revisions: (n: number) => (n > 1 ? `${n} نسخ مسجلة` : ''),
+    originalLanguage: 'معروض بلغته الأصلية',
+    draftBanner: 'معاينة محلية: تظهر المسودات غير المنشورة',
+    draft: 'مسودة — غير منشورة',
+    origin: { official: 'محتوى رسمي', student_note: 'ملاحظات طالب', ai_aid: 'مولّد بالذكاء الاصطناعي' },
+    type: {
+      notes: 'ملاحظات',
+      syllabus: 'البرنامج',
+      lecture: 'درس',
+      exercise: 'نشاط',
+      assessment: 'تقييم',
+      reference: 'مرجع',
+    },
+    contentLanguage: { ar: 'العربية', fr: 'الفرنسية', en: 'الإنجليزية', mixed: 'متعدد اللغات' },
+    aidReviewed: (d: string) => `رُوجع في ${d}`,
+    aidOutdated: 'قد يكون قديمًا: تغيّرت مصادره بعد إنشائه',
+    aidSources: 'المصادر',
+    backToModule: 'العودة إلى المقياس',
+    search: {
+      title: 'البحث في المكتبة',
+      label: 'كلمات البحث',
+      placeholder: 'عنوان، مقياس، موضوع…',
+      submit: 'بحث',
+      module: 'المقياس',
+      type: 'النوع',
+      language: 'اللغة',
+      origin: 'المصدر',
+      any: 'الكل',
+      clear: 'مسح المرشحات',
+      scopeNote: 'يبحث في العناوين والمواضيع والملخصات المراجعة فقط، وليس في نص ملفات PDF.',
+      results: (n: number) =>
+        n === 0 ? 'لا توجد نتائج' : n === 1 ? 'نتيجة واحدة' : n === 2 ? 'نتيجتان' : n <= 10 ? `${n} نتائج` : `${n} نتيجة`,
+      noResults: 'لا توجد نتائج. جرّب كلمات أقل أو أزل بعض المرشحات.',
+      loadError: 'تعذّر تحميل فهرس البحث. حاول لاحقًا أو تصفح المقاييس من الصفحة الرئيسية.',
+      needsJs: 'يتطلب البحث تفعيل JavaScript. يمكنك تصفح المقاييس من الصفحة الرئيسية.',
+    },
+    updates: {
+      title: 'المستجدات',
+      intro: 'تغييرات راجعها المشرف. تاريخ الاكتشاف ليس تاريخ النشر الرسمي.',
+      discovered: (d: string) => `اكتُشف في ${d}`,
+      category: { new: 'جديد', revised: 'معدّل', removed: 'محذوف', corrected: 'تصحيح', assessment: 'تقييم' },
+    },
+    about: {
+      title: 'حول المنصة',
+      body: [
+        'هذه المنصة مبادرة طلابية لتنظيم موارد الماستر 1 محاسبة، السداسي الأول، في مكان واحد سهل الاستعمال على الهاتف.',
+        'Moodle هو المرجع الرسمي للدروس والتعليمات والمواعيد. تُعرض هنا نسخ مراجعة من الملفات مع روابط إلى مصادرها الرسمية.',
+        'الوسائل المولدة بالذكاء الاصطناعي تُوسم بوضوح، وتُربط بالمصادر التي استُخدمت لإنشائها، ولا تُنشر إلا بعد مراجعتها.',
+        'التصفح لا يتطلب حسابًا. لا تستعمل المنصة ملفات تتبع أو إعلانات.',
+      ],
+    },
+    notFound: 'الصفحة غير موجودة',
+  },
+  fr: {
+    siteName: 'Plateforme étudiante — Master comptabilité',
+    siteTagline: 'Master 1, semestre 1 — Université de la formation continue',
+    skip: 'Aller au contenu',
+    nav: { home: 'Accueil', search: 'Recherche', updates: 'Nouveautés', about: 'À propos' },
+    languages: 'Langue',
+    initiative:
+      'Initiative étudiante indépendante. Moodle reste la source officielle des cours, évaluations et échéances. L’hébergement de la plateforme ne vaut pas approbation officielle de l’université.',
+    moodlePortal: 'Portail Moodle officiel',
+    modules: 'Modules',
+    resourcesCount: (n: number) => (n === 0 ? 'Aucune ressource publiée' : n === 1 ? '1 ressource' : `${n} ressources`),
+    recentUpdates: 'Dernières nouveautés',
+    noUpdates: 'Aucune nouveauté publiée sur cette plateforme pour l’instant.',
+    allUpdates: 'Toutes les nouveautés',
+    overview: 'Présentation',
+    curatorNote: 'Note du responsable de la plateforme, pas un texte officiel du module',
+    checkedOn: (d: string) => `Vérifié le ${d}`,
+    facts: { instructor: 'Enseignant', credits: 'Crédits', coefficient: 'Coefficient', academicYear: 'Année universitaire' },
+    featuredNotes: 'Notes du module',
+    courseMaterials: 'Supports de cours',
+    exercises: 'Activités et évaluations officielles',
+    references: 'Références et listes',
+    studyAids: 'Aides à la révision',
+    emptyResources: 'Aucun contenu de ce module n’est encore publié sur cette plateforme. Cela ne signifie pas que Moodle n’en contient pas.',
+    emptyExercises: 'Aucune activité ni évaluation publiée ici pour l’instant. Consultez Moodle pour les consignes officielles.',
+    emptyAids: 'Aucune aide à la révision publiée pour ce module pour l’instant.',
+    openOnMoodle: 'Ouvrir le module sur Moodle',
+    openPdf: 'Ouvrir le PDF',
+    pdfPending: 'Lien du fichier pas encore disponible',
+    officialSource: 'Source officielle',
+    moodleNeedsAccount: 'Moodle demande une connexion avec votre compte universitaire. Cette plateforme ne donne pas accès à Moodle.',
+    details: 'Détails',
+    pages: (n: number) => `${n} pages`,
+    acquired: (d: string) => `Ajouté à la bibliothèque le ${d}`,
+    publishedOnMoodle: (d: string) => `Publié sur Moodle le ${d}`,
+    academicYearLabel: (y: string) => `Année indiquée sur le fichier : ${y}`,
+    revisions: (n: number) => (n > 1 ? `${n} versions enregistrées` : ''),
+    originalLanguage: 'affiché dans sa langue d’origine',
+    draftBanner: 'Aperçu local : les brouillons non publiés sont visibles',
+    draft: 'Brouillon — non publié',
+    origin: { official: 'Contenu officiel', student_note: 'Notes d’étudiant', ai_aid: 'Généré par IA' },
+    type: {
+      notes: 'Notes',
+      syllabus: 'Programme',
+      lecture: 'Cours',
+      exercise: 'Activité',
+      assessment: 'Évaluation',
+      reference: 'Référence',
+    },
+    contentLanguage: { ar: 'arabe', fr: 'français', en: 'anglais', mixed: 'multilingue' },
+    aidReviewed: (d: string) => `Relu le ${d}`,
+    aidOutdated: 'Peut-être obsolète : ses sources ont changé depuis sa création',
+    aidSources: 'Sources',
+    backToModule: 'Retour au module',
+    search: {
+      title: 'Rechercher dans la bibliothèque',
+      label: 'Termes de recherche',
+      placeholder: 'Titre, module, thème…',
+      submit: 'Rechercher',
+      module: 'Module',
+      type: 'Type',
+      language: 'Langue',
+      origin: 'Origine',
+      any: 'Tous',
+      clear: 'Effacer les filtres',
+      scopeNote: 'La recherche porte sur les titres, thèmes et résumés relus, pas sur le texte des PDF.',
+      results: (n: number) => (n === 0 ? 'Aucun résultat' : n === 1 ? '1 résultat' : `${n} résultats`),
+      noResults: 'Aucun résultat. Essayez moins de mots ou retirez des filtres.',
+      loadError: 'Impossible de charger l’index de recherche. Réessayez plus tard ou parcourez les modules depuis l’accueil.',
+      needsJs: 'La recherche nécessite JavaScript. Vous pouvez parcourir les modules depuis l’accueil.',
+    },
+    updates: {
+      title: 'Nouveautés',
+      intro: 'Changements relus par le responsable. La date de découverte n’est pas la date de publication officielle.',
+      discovered: (d: string) => `Découvert le ${d}`,
+      category: { new: 'Nouveau', revised: 'Révisé', removed: 'Retiré', corrected: 'Correction', assessment: 'Évaluation' },
+    },
+    about: {
+      title: 'À propos',
+      body: [
+        'Cette plateforme est une initiative étudiante qui réunit les ressources du Master 1 comptabilité, semestre 1, dans un espace simple à utiliser sur téléphone.',
+        'Moodle est la source officielle des cours, consignes et échéances. Les fichiers présentés ici sont des copies relues, avec des liens vers leurs sources officielles.',
+        'Les aides générées par IA sont clairement signalées, liées aux sources utilisées et publiées uniquement après relecture.',
+        'La consultation ne nécessite pas de compte. La plateforme n’utilise ni traceurs ni publicité.',
+      ],
+    },
+    notFound: 'Page introuvable',
+  },
+  en: {
+    siteName: 'Accounting Master student platform',
+    siteTagline: 'Master 1, Semester 1 — University of Continuing Education',
+    skip: 'Skip to content',
+    nav: { home: 'Home', search: 'Search', updates: 'Updates', about: 'About' },
+    languages: 'Language',
+    initiative:
+      'An independent student initiative. Moodle remains the official source for courses, assessments and deadlines. Hosting this platform does not imply official university endorsement.',
+    moodlePortal: 'Official Moodle portal',
+    modules: 'Modules',
+    resourcesCount: (n: number) => (n === 0 ? 'No resources published yet' : n === 1 ? '1 resource' : `${n} resources`),
+    recentUpdates: 'Recent updates',
+    noUpdates: 'No updates have been published on this platform yet.',
+    allUpdates: 'All updates',
+    overview: 'Overview',
+    curatorNote: 'Note by the platform maintainer, not official module text',
+    checkedOn: (d: string) => `Checked on ${d}`,
+    facts: { instructor: 'Instructor', credits: 'Credits', coefficient: 'Coefficient', academicYear: 'Academic year' },
+    featuredNotes: 'Module notes',
+    courseMaterials: 'Course materials',
+    exercises: 'Official activities and assessments',
+    references: 'References and lists',
+    studyAids: 'Study aids',
+    emptyResources: 'Nothing from this module has been published on this platform yet. This does not mean Moodle has no content.',
+    emptyExercises: 'No activities or assessments have been published here yet. Check Moodle for official instructions.',
+    emptyAids: 'No study aids have been published for this module yet.',
+    openOnMoodle: 'Open the module on Moodle',
+    openPdf: 'Open PDF',
+    pdfPending: 'File link not available yet',
+    officialSource: 'Official source',
+    moodleNeedsAccount: 'Moodle requires signing in with your university account. This platform does not grant access to it.',
+    details: 'Details',
+    pages: (n: number) => `${n} pages`,
+    acquired: (d: string) => `Added to the library on ${d}`,
+    publishedOnMoodle: (d: string) => `Published on Moodle on ${d}`,
+    academicYearLabel: (y: string) => `Year shown on the file: ${y}`,
+    revisions: (n: number) => (n > 1 ? `${n} recorded versions` : ''),
+    originalLanguage: 'shown in its original language',
+    draftBanner: 'Local preview: unpublished drafts are visible',
+    draft: 'Draft — not published',
+    origin: { official: 'Official content', student_note: 'Student notes', ai_aid: 'AI-generated' },
+    type: {
+      notes: 'Notes',
+      syllabus: 'Syllabus',
+      lecture: 'Lecture',
+      exercise: 'Activity',
+      assessment: 'Assessment',
+      reference: 'Reference',
+    },
+    contentLanguage: { ar: 'Arabic', fr: 'French', en: 'English', mixed: 'Mixed languages' },
+    aidReviewed: (d: string) => `Reviewed on ${d}`,
+    aidOutdated: 'May be outdated: its sources changed after it was made',
+    aidSources: 'Sources',
+    backToModule: 'Back to module',
+    search: {
+      title: 'Search the library',
+      label: 'Search terms',
+      placeholder: 'Title, module, topic…',
+      submit: 'Search',
+      module: 'Module',
+      type: 'Type',
+      language: 'Language',
+      origin: 'Origin',
+      any: 'All',
+      clear: 'Clear filters',
+      scopeNote: 'Searches titles, topics and reviewed summaries only — not the text inside PDFs.',
+      results: (n: number) => (n === 0 ? 'No results' : n === 1 ? '1 result' : `${n} results`),
+      noResults: 'No results. Try fewer words or remove some filters.',
+      loadError: 'The search index could not be loaded. Try again later or browse the modules from the home page.',
+      needsJs: 'Search needs JavaScript. You can browse the modules from the home page.',
+    },
+    updates: {
+      title: 'Updates',
+      intro: 'Changes reviewed by the maintainer. The discovery date is not the official publication date.',
+      discovered: (d: string) => `Discovered on ${d}`,
+      category: { new: 'New', revised: 'Revised', removed: 'Removed', corrected: 'Correction', assessment: 'Assessment' },
+    },
+    about: {
+      title: 'About',
+      body: [
+        'This platform is a student initiative that brings the Accounting Master 1, Semester 1 resources together in one place that works well on a phone.',
+        'Moodle is the official source for courses, instructions and deadlines. Files here are reviewed copies, linked to their official sources.',
+        'AI-generated study aids are clearly labelled, linked to the sources they were made from, and published only after review.',
+        'Browsing needs no account. The platform uses no tracking cookies or advertising.',
+      ],
+    },
+    notFound: 'Page not found',
+  },
+};
+
+export type Strings = (typeof strings)['en'];
+export const t = (locale: Locale): Strings => strings[locale];

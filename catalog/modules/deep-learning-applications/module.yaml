@@ -1,0 +1,20 @@
+id: deep-learning-applications
+id_prefix: dl
+language: ar
+title:
+  original: "تطبيقات التعلم العميق"
+  ar: "تطبيقات التعلم العميق"
+  fr: "Applications de l'apprentissage profond"
+  en: "Deep learning applications"
+cover: deep-learning-applications.jpeg
+moodle:
+  course_id: 13
+  url: https://mast-cmpt.ufc.dz/s1/course/view.php?id=13
+  last_checked: 2026-09-26
+aids: []
+facts:
+  instructor: "كلو مهدي"
+  credits: 2
+  coefficient: 2
+  academic_year: "2026–2027"
+  verified: 2026-09-26

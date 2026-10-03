@@ -1,0 +1,60 @@
+---
+import Base from '../../layouts/Base.astro';
+import ModuleCard from '../../components/ModuleCard.astro';
+import LocalText from '../../components/LocalText.astro';
+import { getPublicCatalog, pickCurator } from '../../lib/catalog';
+import { LOCALES, formatDate, href, t, type Locale } from '../../lib/i18n';
+
+export function getStaticPaths() {
+  return LOCALES.map((locale) => ({ params: { locale } }));
+}
+
+const locale = Astro.params.locale as Locale;
+const s = t(locale);
+const { semester, modules, updates } = getPublicCatalog();
+const recent = updates.slice(0, 3);
+const moduleById = new Map(modules.map((m) => [m.id, m]));
+---
+
+<Base locale={locale} nav="home">
+  <h1>{pickCurator(semester.title, locale)?.value}</h1>
+  {semester.academic_year && <p class="meta"><bdi dir="ltr">{semester.academic_year}</bdi></p>}
+  <p class="notice">{s.initiative}</p>
+
+  <h2 id="modules">{s.modules}</h2>
+  <ul class="module-grid" aria-labelledby="modules">
+    {modules.map((m) => <ModuleCard module={m} locale={locale} />)}
+  </ul>
+
+  <h2 id="updates">{s.recentUpdates}</h2>
+  {
+    recent.length === 0 ? (
+      <p class="empty">{s.noUpdates}</p>
+    ) : (
+      <ul class="updates-list">
+        {recent.map((u) => {
+          const mod = moduleById.get(u.module);
+          return (
+            <li class="panel">
+              <span class="badge">{s.updates.category[u.category]}</span> <strong>{pickCurator(u.title, locale)?.value}</strong>
+              <div class="meta">
+                {mod && (
+                  <a href={href(locale, `modules/${mod.id}`)}>
+                    <LocalText text={mod.title} locale={locale} originalLang={mod.language} showFallback={false} />
+                  </a>
+                )}
+                {' · '}
+                {s.updates.discovered(formatDate(u.discovered, locale))}
+              </div>
+            </li>
+          );
+        })}
+      </ul>
+    )
+  }
+  <p>
+    <a href={href(locale, 'updates')}>{s.allUpdates}</a>
+    {' · '}
+    <a href={semester.portal_url} rel="noopener">{s.moodlePortal}</a>
+  </p>
+</Base>

@@ -1,0 +1,86 @@
+---
+import Base from '../../../layouts/Base.astro';
+import LocalText from '../../../components/LocalText.astro';
+import { getPublicCatalog, pickCurator, pickTitle, type PublicModule, type PublicResource } from '../../../lib/catalog';
+import { LOCALES, formatBytes, formatDate, href, t, type Locale } from '../../../lib/i18n';
+
+export function getStaticPaths() {
+  const { modules } = getPublicCatalog();
+  return LOCALES.flatMap((locale) =>
+    modules.flatMap((module) => module.resources.map((resource) => ({ params: { locale, id: resource.id }, props: { resource, module } }))),
+  );
+}
+
+interface Props {
+  resource: PublicResource;
+  module: PublicModule;
+}
+const { resource: r, module: m } = Astro.props;
+const locale = Astro.params.locale as Locale;
+const s = t(locale);
+const summary = r.summary && pickCurator(r.summary, locale);
+const rev = r.revision;
+---
+
+<Base locale={locale} title={pickTitle(r.title, locale, r.language).value} path={`resources/${r.id}`}>
+  <p>
+    <a href={href(locale, `modules/${m.id}`)}>
+      ← {s.backToModule}: <LocalText text={m.title} locale={locale} originalLang={m.language} showFallback={false} />
+    </a>
+  </p>
+  <h1><LocalText text={r.title} locale={locale} originalLang={r.language} /></h1>
+  <div class="badges">
+    <span class:list={['badge', r.origin]}>{s.origin[r.origin]}</span>
+    <span class="badge">{s.type[r.type]}</span>
+    {r.isDraft && <span class="badge draft">{s.draft}</span>}
+  </div>
+
+  {summary && <p lang={summary.lang}>{summary.value}</p>}
+
+  <p class="actions">
+    {
+      rev.fileUrl ? (
+        <a class="button" href={rev.fileUrl} rel="noopener">
+          {s.openPdf}
+        </a>
+      ) : (
+        <span class="button" aria-disabled="true">
+          {s.pdfPending}
+        </span>
+      )
+    }
+    {
+      r.officialUrl && (
+        <a class="button secondary" href={r.officialUrl} rel="noopener">
+          {s.officialSource}
+        </a>
+      )
+    }
+  </p>
+  {r.officialUrl && <p class="meta">{s.moodleNeedsAccount}</p>}
+
+  <section class="panel" aria-labelledby="details">
+    <h2 id="details" style="margin-block-start:0">{s.details}</h2>
+    <dl class="facts">
+      <dt>{s.search.language}</dt>
+      <dd>{s.contentLanguage[r.language]}</dd>
+      {
+        rev.pages && (
+          <>
+            <dt>PDF</dt>
+            <dd>
+              {s.pages(rev.pages)} · <bdi dir="ltr">{formatBytes(rev.bytes, locale)}</bdi>
+            </dd>
+          </>
+        )
+      }
+    </dl>
+    <ul class="meta">
+      {rev.publishedOnMoodle && <li>{s.publishedOnMoodle(formatDate(rev.publishedOnMoodle, locale))}</li>}
+      <li>{s.acquired(formatDate(rev.acquired, locale))}</li>
+      {rev.academicYear && <li>{s.academicYearLabel(rev.academicYear)}</li>}
+      {r.reviewed && <li>{s.checkedOn(formatDate(r.reviewed, locale))}</li>}
+      {rev.count > 1 && <li>{s.revisions(rev.count)}</li>}
+    </ul>
+  </section>
+</Base>

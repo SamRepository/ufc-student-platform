@@ -1,0 +1,20 @@
+id: ifrs-1
+id_prefix: ifrs
+language: ar
+title:
+  original: "معايير إعداد التقارير المالية الدولية 1"
+  ar: "معايير إعداد التقارير المالية الدولية 1"
+  fr: "Normes internationales d'information financière (IFRS) 1"
+  en: "International Financial Reporting Standards (IFRS) 1"
+cover: ifrs-1.jpg
+moodle:
+  course_id: 18
+  url: https://mast-cmpt.ufc.dz/s1/course/view.php?id=18
+  last_checked: 2026-09-26
+aids: []
+facts:
+  instructor: "رحيم سعيد"
+  credits: 5
+  coefficient: 2
+  academic_year: "2026–2027"
+  verified: 2026-10-03

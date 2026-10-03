@@ -1,0 +1,28 @@
+---
+/**
+ * Renders a manifest title in the UI locale, or its original text with an explicit
+ * "shown in original language" label (F-14). Mixed-script text gets dir="auto".
+ */
+import { pickTitle } from '../lib/catalog';
+import { bidiText } from '../lib/bidi';
+import { t, type Locale } from '../lib/i18n';
+import type { LocalizedText } from '../lib/schema';
+
+interface Props {
+  text: LocalizedText;
+  locale: Locale;
+  originalLang: string;
+  showFallback?: boolean;
+}
+const { text, locale, originalLang, showFallback = true } = Astro.props;
+const picked = pickTitle(text, locale, originalLang);
+---
+
+<bdi lang={picked.lang} dir="auto">{bidiText(picked.value)}</bdi>{
+  showFallback && picked.fallback && (
+    <>
+      {' '}
+      <span class="fallback">({t(locale).originalLanguage})</span>
+    </>
+  )
+}

@@ -1,0 +1,20 @@
+id: advanced-financial-management
+id_prefix: afm
+language: ar
+title:
+  original: "التسيير المالي المعمق"
+  ar: "التسيير المالي المعمق"
+  fr: "Gestion financière approfondie"
+  en: "Advanced financial management"
+cover: advanced-financial-management.jpg
+moodle:
+  course_id: 17
+  url: https://mast-cmpt.ufc.dz/s1/course/view.php?id=17
+  last_checked: 2026-09-26
+aids: []
+facts:
+  instructor: "عبد الكريم بعداش"
+  credits: 4
+  coefficient: 2
+  academic_year: "2026–2027"
+  verified: 2026-09-26

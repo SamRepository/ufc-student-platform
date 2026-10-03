@@ -1,0 +1,189 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../../../layouts/Base.astro';
+import LocalText from '../../../components/LocalText.astro';
+import ResourceItem from '../../../components/ResourceItem.astro';
+import { getPublicCatalog, pickCurator, pickTitle, type PublicModule } from '../../../lib/catalog';
+import { coverImage } from '../../../lib/covers';
+import { LOCALES, formatDate, href, t, type Locale } from '../../../lib/i18n';
+
+export function getStaticPaths() {
+  const { modules } = getPublicCatalog();
+  return LOCALES.flatMap((locale) => modules.map((module) => ({ params: { locale, slug: module.id }, props: { module } })));
+}
+
+interface Props {
+  module: PublicModule;
+}
+const { module: m } = Astro.props;
+const locale = Astro.params.locale as Locale;
+const s = t(locale);
+const cover = coverImage(m.cover);
+const overview = m.overview && pickCurator(m.overview.text, locale);
+
+// F-02 order: notes first, then course materials, official activities, references, study aids.
+const featured = m.resources.filter((r) => r.featured);
+const materials = m.resources.filter((r) => !r.featured && (r.type === 'lecture' || r.type === 'syllabus'));
+const activities = m.resources.filter((r) => !r.featured && (r.type === 'exercise' || r.type === 'assessment'));
+const references = m.resources.filter((r) => !r.featured && r.type === 'reference');
+const resourceById = new Map(m.resources.map((r) => [r.id, r]));
+---
+
+<Base locale={locale} title={pickTitle(m.title, locale, m.language).value} path={`modules/${m.id}`}>
+  <h1><LocalText text={m.title} locale={locale} originalLang={m.language} /></h1>
+  {cover && <Image class="module-cover" src={cover} alt="" widths={[480, 900]} sizes="(max-width: 30rem) 100vw, 28rem" />}
+
+  <section class="panel" aria-labelledby="overview">
+    <h2 id="overview" style="margin-block-start:0">{s.overview}</h2>
+    {
+      overview && (
+        <>
+          <p lang={overview.lang}>{overview.value}</p>
+          <p class="meta">
+            {s.curatorNote} · {s.checkedOn(formatDate(m.overview!.checked, locale))}
+          </p>
+        </>
+      )
+    }
+    {
+      m.facts && (
+        <dl class="facts">
+          {m.facts.instructor && (
+            <>
+              <dt>{s.facts.instructor}</dt>
+              <dd>
+                <bdi dir="auto">{m.facts.instructor}</bdi>
+              </dd>
+            </>
+          )}
+          {m.facts.credits !== undefined && (
+            <>
+              <dt>{s.facts.credits}</dt>
+              <dd>{m.facts.credits}</dd>
+            </>
+          )}
+          {m.facts.coefficient !== undefined && (
+            <>
+              <dt>{s.facts.coefficient}</dt>
+              <dd>{m.facts.coefficient}</dd>
+            </>
+          )}
+          {m.facts.academic_year && (
+            <>
+              <dt>{s.facts.academicYear}</dt>
+              <dd>
+                <bdi dir="ltr">{m.facts.academic_year}</bdi>
+              </dd>
+            </>
+          )}
+        </dl>
+      )
+    }
+    {m.facts && <p class="meta">{s.checkedOn(formatDate(m.facts.verified, locale))}</p>}
+    <p class="actions" style="margin-block-end:0">
+      <a class="button secondary" href={m.moodle.url} rel="noopener">{s.openOnMoodle}</a>
+    </p>
+  </section>
+
+  {
+    featured.length > 0 && (
+      <section aria-labelledby="notes">
+        <h2 id="notes">{s.featuredNotes}</h2>
+        <ul class="resource-list">
+          {featured.map((r) => (
+            <ResourceItem resource={r} locale={locale} />
+          ))}
+        </ul>
+      </section>
+    )
+  }
+
+  <section aria-labelledby="materials">
+    <h2 id="materials">{s.courseMaterials}</h2>
+    {
+      materials.length ? (
+        <ul class="resource-list">
+          {materials.map((r) => (
+            <ResourceItem resource={r} locale={locale} />
+          ))}
+        </ul>
+      ) : (
+        <p class="empty">{s.emptyResources}</p>
+      )
+    }
+  </section>
+
+  <section aria-labelledby="activities">
+    <h2 id="activities">{s.exercises}</h2>
+    {
+      activities.length ? (
+        <ul class="resource-list">
+          {activities.map((r) => (
+            <ResourceItem resource={r} locale={locale} />
+          ))}
+        </ul>
+      ) : (
+        <p class="empty">{s.emptyExercises}</p>
+      )
+    }
+  </section>
+
+  {
+    references.length > 0 && (
+      <section aria-labelledby="references">
+        <h2 id="references">{s.references}</h2>
+        <ul class="resource-list">
+          {references.map((r) => (
+            <ResourceItem resource={r} locale={locale} />
+          ))}
+        </ul>
+      </section>
+    )
+  }
+
+  <section aria-labelledby="aids">
+    <h2 id="aids">{s.studyAids}</h2>
+    {
+      m.aids.length ? (
+        <ul class="resource-list">
+          {m.aids.map((a) => (
+            <li class:list={['resource', { 'is-draft': a.isDraft }]}>
+              <div class="title">
+                <LocalText text={a.title} locale={locale} originalLang={a.language} />
+                <div class="badges">
+                  <span class="badge ai_aid">{s.origin.ai_aid}</span>
+                  {a.reviewed && <span class="badge">{s.aidReviewed(formatDate(a.reviewed, locale))}</span>}
+                  {a.outdated && <span class="badge warn">{s.aidOutdated}</span>}
+                  {a.isDraft && <span class="badge draft">{s.draft}</span>}
+                </div>
+                {a.sourceResourceIds.length > 0 && (
+                  <p class="meta">
+                    {s.aidSources}:{' '}
+                    {a.sourceResourceIds.map((id, i) => {
+                      const src = resourceById.get(id)!;
+                      return (
+                        <>
+                          {i > 0 && ', '}
+                          <a href={href(locale, `resources/${id}`)}>
+                            <LocalText text={src.title} locale={locale} originalLang={src.language} showFallback={false} />
+                          </a>
+                        </>
+                      );
+                    })}
+                  </p>
+                )}
+              </div>
+              {a.url && (
+                <a class="button" href={a.url} rel="noopener">
+                  {s.details}
+                </a>
+              )}
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p class="empty">{s.emptyAids}</p>
+      )
+    }
+  </section>
+</Base>

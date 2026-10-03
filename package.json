@@ -1,0 +1,32 @@
+{
+  "name": "ufc-student-platform",
+  "private": true,
+  "type": "module",
+  "description": "Student-initiative course portal for UFC Master 1 S1 accounting students — static catalog built from a reviewed Git manifest.",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "dev:drafts": "cross-env SHOW_DRAFTS=1 astro dev",
+    "build": "npm run validate && astro build",
+    "build:drafts": "cross-env SHOW_DRAFTS=1 astro build",
+    "preview": "astro preview",
+    "validate": "tsx scripts/validate-catalog.ts",
+    "test": "vitest run",
+    "check": "astro check"
+  },
+  "dependencies": {
+    "astro": "^7.3.5",
+    "yaml": "^2.9.1",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@types/node": "^24.19.1",
+    "cross-env": "^10.1.0",
+    "tsx": "^4.23.15",
+    "typescript": "^6.0.3",
+    "vitest": "^5.0.3"
+  }
+}

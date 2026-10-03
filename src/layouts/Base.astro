@@ -1,0 +1,87 @@
+---
+import '../styles/global.css';
+import { getPublicCatalog } from '../lib/catalog';
+import { LOCALES, LOCALE_NAMES, dir, href, t, type Locale } from '../lib/i18n';
+
+interface Props {
+  locale: Locale;
+  /** Page title (without site name). */
+  title?: string;
+  /** Locale-independent path of this page, e.g. "modules/lean-startup", used by the language switcher. */
+  path?: string;
+  nav?: 'home' | 'search' | 'updates' | 'about';
+}
+
+const { locale, title, path = '', nav } = Astro.props;
+const s = t(locale);
+const { semester, includeDrafts } = getPublicCatalog();
+const pageTitle = title ? `${title} — ${s.siteName}` : s.siteName;
+const navItems = [
+  ['home', ''],
+  ['search', 'search'],
+  ['updates', 'updates'],
+  ['about', 'about'],
+] as const;
+---
+
+<!doctype html>
+<html lang={locale} dir={dir(locale)}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={s.siteTagline} />
+    {includeDrafts && <meta name="robots" content="noindex" />}
+    {LOCALES.map((l) => <link rel="alternate" hreflang={l} href={href(l, path)} />)}
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  </head>
+  <body>
+    <a class="skip" href="#main">{s.skip}</a>
+    {includeDrafts && <div class="draft-banner" role="status">{s.draftBanner}</div>}
+    <header class="site-header">
+      <div class="wrap">
+        <a class="brand" href={href(locale)}>
+          {s.siteName}
+          <small>{s.siteTagline}</small>
+        </a>
+        <nav class="site-nav" aria-label={s.siteName}>
+          <ul>
+            {
+              navItems.map(([key, p]) => (
+                <li>
+                  <a href={href(locale, p)} aria-current={nav === key ? 'page' : undefined}>
+                    {s.nav[key]}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+        <nav class="lang-switch" aria-label={s.languages}>
+          <ul>
+            {
+              LOCALES.map((l) => (
+                <li>
+                  <a href={href(l, path)} lang={l} hreflang={l} aria-current={l === locale ? 'true' : undefined}>
+                    {LOCALE_NAMES[l]}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <main id="main" class="wrap" tabindex="-1">
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">
+        <p>{s.initiative}</p>
+        <p>
+          <a href={semester.portal_url} rel="noopener">{s.moodlePortal}</a>
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>

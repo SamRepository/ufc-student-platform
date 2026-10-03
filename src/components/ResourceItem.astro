@@ -1,0 +1,37 @@
+---
+import LocalText from './LocalText.astro';
+import { href, t, type Locale } from '../lib/i18n';
+import type { PublicResource } from '../lib/catalog';
+
+interface Props {
+  resource: PublicResource;
+  locale: Locale;
+}
+const { resource: r, locale } = Astro.props;
+const s = t(locale);
+---
+
+<li class:list={['resource', { 'is-draft': r.isDraft }]}>
+  <div class="title">
+    <a href={href(locale, `resources/${r.id}`)}>
+      <LocalText text={r.title} locale={locale} originalLang={r.language} />
+    </a>
+    <div class="badges">
+      <span class:list={['badge', r.origin]}>{s.origin[r.origin]}</span>
+      <span class="badge">{s.type[r.type]}</span>
+      {r.revision.pages && <span class="badge">{s.pages(r.revision.pages)}</span>}
+      {r.isDraft && <span class="badge draft">{s.draft}</span>}
+    </div>
+  </div>
+  {
+    r.revision.fileUrl ? (
+      <a class="button" href={r.revision.fileUrl} rel="noopener">
+        {s.openPdf}
+      </a>
+    ) : (
+      <span class="button" aria-disabled="true">
+        {s.pdfPending}
+      </span>
+    )
+  }
+</li>
