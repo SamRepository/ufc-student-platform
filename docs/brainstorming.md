@@ -111,7 +111,7 @@ Suggested generation priorities: missing high-value module overviews; aids tied 
 6. Is there a target launch date or existing developer expertise to account for?
 7. What ceiling applies to any residual external-service or backup costs beyond the existing infrastructure?
 8. Which exact days/times should implement the confirmed few-times-per-week cadence, and does Moodle provide an authorized API or feed?
-9. Which GitHub account or organization will own the repository, what should it be named, and should it be public or private? For the confirmed GitHub-to-Coolify CI/CD direction, validate the proposed GitHub Actions and registry implementation and agree branch/trigger rules and environment policy.
+9. ~~Which GitHub account or organization will own the repository, what should it be named, and should it be public or private?~~ Answered 2026-10-03: SamRepository/ufc-student-platform, public. For the confirmed GitHub-to-Coolify CI/CD direction, validate the proposed GitHub Actions and registry implementation and agree branch/trigger rules and environment policy.
 
 Assessment submissions and private grades remain excluded from the proposed first two phases. Reopen that scope only if the user requests it.
 
@@ -143,7 +143,8 @@ Verify current official documentation and actual account settings for NotebookLM
 | 2026-10-03 | Option B adopted: Phase 1 is a static Astro site built from a reviewed YAML manifest in Git; PostgreSQL, Better Auth and accounts move to Phase 2. | Confirmed by user |
 | 2026-10-03 | Default interface language: Arabic (RTL), with French and English switchers. | Confirmed by user |
 | 2026-10-03 | Application repository created locally at `D:\My UFCs\ufc-student-platform` (no GitHub remote yet); M0 pilot drafting started with English and Lean Startup. The planning docs are copied into its `docs/` folder, which is canonical from now on. | Confirmed by user |
-| 2026-10-03 | Pilot catalog published: the 26 English and Lean Startup resources linked to their Drive files (matched by exact size and name) and set to `published`. The Drive folder is shared "anyone with the link → Viewer". Three damaged Drive names (Lean Startup units 02, 04, 12) were fixed to `.pdf`. Not yet committed or deployed. | Approved by user |
+| 2026-10-03 | Pilot catalog published: the 26 English and Lean Startup resources linked to their Drive files (matched by exact size and name) and set to `published`. The Drive folder is shared "anyone with the link → Viewer". Three damaged Drive names (Lean Startup units 02, 04, 12) were fixed to `.pdf`. Not yet deployed. | Approved by user |
+| 2026-10-03 | GitHub repository: `SamRepository/ufc-student-platform`, public, default branch `main`. Withdrawn resources and their Drive IDs remain visible in the public git history. | Confirmed by user |
 
 ## Planning package produced
 
